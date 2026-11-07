@@ -1,0 +1,66 @@
+{
+  "name": "Calculadora Veterinaria de Dosis",
+  "short_name": "VetCalc",
+  "description": "Cálculo de medicamentos inyectables para uso veterinario",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f0f7f4",
+  "theme_color": "#1a7f5a",
+  "lang": "es",
+  "categories": ["medical", "utilities"],
+  "icons": [
+    {
+      "src": "icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Nuevo cálculo",
+      "short_name": "Calcular",
+      "description": "Abrir calculadora de dosis",
+      "url": "./index.html",
+      "icons": [{ "src": "icon-96.png", "sizes": "96x96" }]
+    }
+  ]
+}

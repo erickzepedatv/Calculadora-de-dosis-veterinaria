@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a7f5a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="VetCalc">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
+  <title>Calculadora Veterinaria de Dosis</title>
+  <style>
+    /* ===== Estilos esenciales tipo Bootstrap 5 (offline) ===== */
+    *,::after,::before{box-sizing:border-box}
+    :root{--bs-primary:#0d6efd;--bs-secondary:#6c757d;--bs-success:#198754;--bs-danger:#dc3545;--bs-warning:#ffc107;--bs-info:#0dcaf0;--bs-light:#f8f9fa;--bs-dark:#212529;--bs-white:#fff;--bs-gray:#6c757d;--bs-gray-dark:#343a40;--bs-gray-100:#f8f9fa;--bs-gray-200:#e9ecef;--bs-gray-300:#dee2e6;--bs-gray-400:#ced4da;--bs-gray-500:#adb5bd;--bs-gray-600:#6c757d;--bs-gray-700:#495057;--bs-gray-800:#343a40;--bs-gray-900:#212529;--bs-border-color:#dee2e6;--bs-border-radius:.375rem;--bs-border-radius-lg:.5rem;--bs-border-radius-sm:.25rem;--bs-body-font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--bs-body-font-size:1rem;--bs-body-font-weight:400;--bs-body-line-height:1.5;--bs-body-color:#212529;--bs-body-bg:#f4f7f6;--bs-primary-rgb:13,110,253;--bs-success-rgb:25,135,84;--bs-danger-rgb:220,53,69;--bs-warning-rgb:255,193,7;--bs-info-rgb:13,202,240;--bs-focus-ring:rgba(13,110,253,.25);--bs-box-shadow:0 .5rem 1rem rgba(0,0,0,.15);--bs-box-shadow-sm:0 .125rem .25rem rgba(0,0,0,.075);--bs-box-shadow-lg:0 1rem 3rem rgba(0,0,0,.175)}
+    body{margin:0;font-family:var(--bs-body-font-family);font-size:var(--bs-body-font-size);font-weight:var(--bs-body-font-weight);line-height:var(--bs-body-line-height);color:var(--bs-body-color);background-color:var(--bs-body-bg);-webkit-text-size-adjust:100%}
+    h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:.5rem;font-weight:600;line-height:1.2}
+    p{margin-top:0;margin-bottom:1rem}
+    a{color:var(--bs-primary);text-decoration:underline}
+    label{display:inline-block;margin-bottom:.5rem}
+    button,input,optgroup,select,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}
+    button,select{text-transform:none}
+    [role=button]{cursor:pointer}
+    textarea{resize:vertical}
+    fieldset{min-width:0;padding:0;margin:0;border:0}
+    .container{width:100%;padding-right:1rem;padding-left:1rem;margin-right:auto;margin-left:auto}
+    @media (min-width:576px){.container{max-width:540px}}
+    @media (min-width:768px){.container{max-width:720px}}
+    @media (min-width:992px){.container{max-width:960px}}
+    @media (min-width:1200px){.container{max-width:1140px}}
+    .row{--bs-gutter-x:1.5rem;--bs-gutter-y:0;display:flex;flex-wrap:wrap;margin-top:calc(-1*var(--bs-gutter-y));margin-right:calc(-.5*var(--bs-gutter-x));margin-left:calc(-.5*var(--bs-gutter-x))}
+    .row>*{flex-shrink:0;width:100%;max-width:100%;padding-right:calc(var(--bs-gutter-x)*.5);padding-left:calc(var(--bs-gutter-x)*.5);margin-top:var(--bs-gutter-y)}
+    .col{flex:1 0 0%}
+    .col-auto{flex:0 0 auto;width:auto}
+    .col-1{flex:0 0 auto;width:8.33333333%}.col-2{flex:0 0 auto;width:16.66666667%}.col-3{flex:0 0 auto;width:25%}.col-4{flex:0 0 auto;width:33.33333333%}.col-5{flex:0 0 auto;width:41.66666667%}.col-6{flex:0 0 auto;width:50%}.col-7{flex:0 0 auto;width:58.33333333%}.col-8{flex:0 0 auto;width:66.66666667%}.col-9{flex:0 0 auto;width:75%}.col-10{flex:0 0 auto;width:83.33333333%}.col-11{flex:0 0 auto;width:91.66666667%}.col-12{flex:0 0 auto;width:100%}
+    @media (min-width:576px){.col-sm{flex:1 0 0%}.col-sm-auto{flex:0 0 auto;width:auto}.col-sm-1{flex:0 0 auto;width:8.33333333%}.col-sm-2{flex:0 0 auto;width:16.66666667%}.col-sm-3{flex:0 0 auto;width:25%}.col-sm-4{flex:0 0 auto;width:33.33333333%}.col-sm-5{flex:0 0 auto;width:41.66666667%}.col-sm-6{flex:0 0 auto;width:50%}.col-sm-7{flex:0 0 auto;width:58.33333333%}.col-sm-8{flex:0 0 auto;width:66.66666667%}.col-sm-9{flex:0 0 auto;width:75%}.col-sm-10{flex:0 0 auto;width:83.33333333%}.col-sm-11{flex:0 0 auto;width:91.66666667%}.col-sm-12{flex:0 0 auto;width:100%}}
+    @media (min-width:768px){.col-md{flex:1 0 0%}.col-md-auto{flex:0 0 auto;width:auto}.col-md-1{flex:0 0 auto;width:8.33333333%}.col-md-2{flex:0 0 auto;width:16.66666667%}.col-md-3{flex:0 0 auto;width:25%}.col-md-4{flex:0 0 auto;width:33.33333333%}.col-md-5{flex:0 0 auto;width:41.66666667%}.col-md-6{flex:0 0 auto;width:50%}.col-md-7{flex:0 0 auto;width:58.33333333%}.col-md-8{flex:0 0 auto;width:66.66666667%}.col-md-9{flex:0 0 auto;width:75%}.col-md-10{flex:0 0 auto;width:83.33333333%}.col-md-11{flex:0 0 auto;width:91.66666667%}.col-md-12{flex:0 0 auto;width:100%}}
+    @media (min-width:992px){.col-lg{flex:1 0 0%}.col-lg-auto{flex:0 0 auto;width:auto}.col-lg-1{flex:0 0 auto;width:8.33333333%}.col-lg-2{flex:0 0 auto;width:16.66666667%}.col-lg-3{flex:0 0 auto;width:25%}.col-lg-4{flex:0 0 auto;width:33.33333333%}.col-lg-5{flex:0 0 auto;width:41.66666667%}.col-lg-6{flex:0 0 auto;width:50%}.col-lg-7{flex:0 0 auto;width:58.33333333%}.col-lg-8{flex:0 0 auto;width:66.66666667%}.col-lg-9{flex:0 0 auto;width:75%}.col-lg-10{flex:0 0 auto;width:83.33333333%}.col-lg-11{flex:0 0 auto;width:91.66666667%}.col-lg-12{flex:0 0 auto;width:100%}}
+    .g-0{--bs-gutter-x:0}.g-0{--bs-gutter-y:0}.g-1{--bs-gutter-x:.25rem}.g-1{--bs-gutter-y:.25rem}.g-2{--bs-gutter-x:.5rem}.g-2{--bs-gutter-y:.5rem}.g-3{--bs-gutter-x:1rem}.g-3{--bs-gutter-y:1rem}.g-4{--bs-gutter-x:1.5rem}.g-4{--bs-gutter-y:1.5rem}.g-5{--bs-gutter-x:3rem}.g-5{--bs-gutter-y:3rem}
+    .card{position:relative;display:flex;flex-direction:column;min-width:0;color:var(--bs-body-color);word-wrap:break-word;background-color:#fff;background-clip:border-box;border:1px solid rgba(0,0,0,.125);border-radius:var(--bs-border-radius-lg)}
+    .card-body{flex:1 1 auto;padding:1.5rem}
+    .card-title{margin-bottom:.5rem}
+    .card-header{padding:1rem 1.5rem;margin-bottom:0;color:var(--bs-body-color);background-color:rgba(0,0,0,.03);border-bottom:1px solid rgba(0,0,0,.125)}
+    .card-header:first-child{border-radius:calc(var(--bs-border-radius-lg) - 1px) calc(var(--bs-border-radius-lg) - 1px) 0 0}
+    .card-footer{padding:1rem 1.5rem;color:var(--bs-body-color);background-color:rgba(0,0,0,.03);border-top:1px solid rgba(0,0,0,.125)}
+    .card-footer:last-child{border-radius:0 0 calc(var(--bs-border-radius-lg) - 1px) calc(var(--bs-border-radius-lg) - 1px)}
+    .form-label{margin-bottom:.5rem;font-weight:500}
+    .form-control{display:block;width:100%;padding:.5rem .75rem;font-size:1rem;font-weight:400;line-height:1.5;color:var(--bs-body-color);-webkit-appearance:none;-moz-appearance:none;appearance:none;background-color:#fff;background-clip:padding-box;border:1px solid var(--bs-border-color);border-radius:var(--bs-border-radius);transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out}
+    .form-control:focus{color:var(--bs-body-color);background-color:#fff;border-color:#86b7fe;outline:0;box-shadow:0 0 0 .25rem var(--bs-focus-ring)}
+    .form-control::placeholder{color:var(--bs-gray-500);opacity:1}
+    .form-control:disabled{background-color:var(--bs-gray-200);opacity:1}
+    .form-control.is-invalid{border-color:var(--bs-danger)}
+    .form-control.is-invalid:focus{box-shadow:0 0 0 .25rem rgba(220,53,69,.25)}
+    .form-select{display:block;width:100%;padding:.5rem 2.25rem .5rem .75rem;font-size:1rem;font-weight:400;line-height:1.5;color:var(--bs-body-color);-webkit-appearance:none;-moz-appearance:none;appearance:none;background-color:#fff;background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right .75rem center;background-size:16px 12px;border:1px solid var(--bs-border-color);border-radius:var(--bs-border-radius);transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out}
+    .form-select:focus{border-color:#86b7fe;outline:0;box-shadow:0 0 0 .25rem var(--bs-focus-ring)}
+    .form-check{display:block;min-height:1.5rem;padding-left:1.5em;margin-bottom:.5rem}
+    .form-check .form-check-input{float:left;margin-left:-1.5em}
+    .form-check-input{--bs-form-check-bg:#fff;flex-shrink:0;width:1em;height:1em;margin-top:.25em;vertical-align:top;-webkit-appearance:none;-moz-appearance:none;appearance:none;background-color:var(--bs-form-check-bg);background-repeat:no-repeat;background-position:center;background-size:contain;border:1px solid var(--bs-border-color);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .form-check-input[type=checkbox]{border-radius:.25em}
+    .form-check-input[type=radio]{border-radius:50%}
+    .form-check-input:active{filter:brightness(90%)}
+    .form-check-input:focus{border-color:#86b7fe;outline:0;box-shadow:0 0 0 .25rem var(--bs-focus-ring)}
+    .form-check-input:checked{background-color:var(--bs-primary);border-color:var(--bs-primary)}
+    .form-check-input:checked[type=checkbox]{background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e")}
+    .form-check-input:checked[type=radio]{background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e")}
+    .form-check-input:disabled{pointer-events:none;filter:none;opacity:.5}
+    .form-check-input[disabled]~.form-check-label,.form-check-input:disabled~.form-check-label{cursor:default;opacity:.5}
+    .form-check-label{cursor:pointer}
+    .form-check-inline{display:inline-block;margin-right:1rem}
+    .btn{display:inline-block;padding:.5rem 1rem;font-size:1rem;font-weight:500;line-height:1.5;color:var(--bs-body-color);text-align:center;text-decoration:none;vertical-align:middle;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;user-select:none;border:1px solid transparent;border-radius:var(--bs-border-radius);background-color:transparent;transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out}
+    .btn:hover{color:var(--bs-body-color)}
+    .btn:focus-visible{outline:0;box-shadow:0 0 0 .25rem var(--bs-focus-ring)}
+    .btn:disabled,.btn.disabled{pointer-events:none;opacity:.65}
+    .btn-primary{--bs-btn-color:#fff;--bs-btn-bg:#0d6efd;--bs-btn-border-color:#0d6efd;--bs-btn-hover-color:#fff;--bs-btn-hover-bg:#0b5ed7;--bs-btn-hover-border-color:#0a58ca;--bs-btn-active-bg:#0a58ca;color:var(--bs-btn-color);background-color:var(--bs-btn-bg);border-color:var(--bs-btn-border-color)}
+    .btn-primary:hover{color:var(--bs-btn-hover-color);background-color:var(--bs-btn-hover-bg);border-color:var(--bs-btn-hover-border-color)}
+    .btn-secondary{--bs-btn-color:#fff;--bs-btn-bg:#6c757d;--bs-btn-border-color:#6c757d;--bs-btn-hover-color:#fff;--bs-btn-hover-bg:#5c636a;--bs-btn-hover-border-color:#565e64;color:var(--bs-btn-color);background-color:var(--bs-btn-bg);border-color:var(--bs-btn-border-color)}
+    .btn-secondary:hover{color:var(--bs-btn-hover-color);background-color:var(--bs-btn-hover-bg);border-color:var(--bs-btn-hover-border-color)}
+    .btn-success{--bs-btn-color:#fff;--bs-btn-bg:#198754;--bs-btn-border-color:#198754;--bs-btn-hover-color:#fff;--bs-btn-hover-bg:#157347;--bs-btn-hover-border-color:#146c43;color:var(--bs-btn-color);background-color:var(--bs-btn-bg);border-color:var(--bs-btn-border-color)}
+    .btn-success:hover{color:var(--bs-btn-hover-color);background-color:var(--bs-btn-hover-bg);border-color:var(--bs-btn-hover-border-color)}
+    .btn-danger{--bs-btn-color:#fff;--bs-btn-bg:#dc3545;--bs-btn-border-color:#dc3545;--bs-btn-hover-color:#fff;--bs-btn-hover-bg:#bb2d3b;--bs-btn-hover-border-color:#b02a37;color:var(--bs-btn-color);background-color:var(--bs-btn-bg);border-color:var(--bs-btn-border-color)}
+    .btn-danger:hover{color:var(--bs-btn-hover-color);background-color:var(--bs-btn-hover-bg);border-color:var(--bs-btn-hover-border-color)}
+    .btn-warning{--bs-btn-color:#000;--bs-btn-bg:#ffc107;--bs-btn-border-color:#ffc107;--bs-btn-hover-color:#000;--bs-btn-hover-bg:#ffca2c;--bs-btn-hover-border-color:#ffc720;color:var(--bs-btn-color);background-color:var(--bs-btn-bg);border-color:var(--bs-btn-border-color)}
+    .btn-warning:hover{color:var(--bs-btn-hover-color);background-color:var(--bs-btn-hover-bg);border-color:var(--bs-btn-hover-border-color)}
+    .btn-outline-primary{--bs-btn-color:#0d6efd;--bs-btn-border-color:#0d6efd;--bs-btn-hover-color:#fff;--bs-btn-hover-bg:#0d6efd;--bs-btn-hover-border-color:#0d6efd;color:var(--bs-btn-color);border-color:var(--bs-btn-border-color)}
+    .btn-outline-primary:hover{color:var(--bs-btn-hover-color);background-color:var(--bs-btn-hover-bg);border-color:var(--bs-btn-hover-border-color)}
+    .btn-outline-danger{--bs-btn-color:#dc3545;--bs-btn-border-color:#dc3545;--bs-btn-hover-color:#fff;--bs-btn-hover-bg:#dc3545;--bs-btn-hover-border-color:#dc3545;color:var(--bs-btn-color);border-color:var(--bs-btn-border-color)}
+    .btn-outline-danger:hover{color:var(--bs-btn-hover-color);background-color:var(--bs-btn-hover-bg);border-color:var(--bs-btn-hover-border-color)}
+    .btn-sm{padding:.25rem .5rem;font-size:.875rem;border-radius:var(--bs-border-radius-sm)}
+    .btn-lg{padding:.75rem 1.5rem;font-size:1.25rem;border-radius:var(--bs-border-radius-lg)}
+    .alert{--bs-alert-bg:transparent;--bs-alert-padding-x:1rem;--bs-alert-padding-y:1rem;--bs-alert-margin-bottom:1rem;--bs-alert-color:inherit;--bs-alert-border-color:transparent;--bs-alert-border:1px solid var(--bs-alert-border-color);--bs-alert-border-radius:var(--bs-border-radius);position:relative;padding:var(--bs-alert-padding-y) var(--bs-alert-padding-x);margin-bottom:var(--bs-alert-margin-bottom);color:var(--bs-alert-color);background-color:var(--bs-alert-bg);border:var(--bs-alert-border);border-radius:var(--bs-alert-border-radius)}
+    .alert-success{--bs-alert-color:#0a3622;--bs-alert-bg:#d1e7dd;--bs-alert-border-color:#a3cfbb}
+    .alert-danger{--bs-alert-color:#58151c;--bs-alert-bg:#f8d7da;--bs-alert-border-color:#f1aeb5}
+    .alert-warning{--bs-alert-color:#664d03;--bs-alert-bg:#fff3cd;--bs-alert-border-color:#ffe69c}
+    .alert-info{--bs-alert-color:#055160;--bs-alert-bg:#cff4fc;--bs-alert-border-color:#9eeaf9}
+    .alert-dismissible{padding-right:3rem}
+    .alert-dismissible .btn-close{position:absolute;top:0;right:0;z-index:2;padding:1.25rem 1rem}
+    .btn-close{box-sizing:content-box;width:1em;height:1em;padding:.25em .25em;color:#000;background:transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;border:0;border-radius:.375rem;opacity:.5}
+    .btn-close:hover{color:#000;text-decoration:none;opacity:.75}
+    .btn-close:focus{outline:0;box-shadow:0 0 0 .25rem var(--bs-focus-ring);opacity:1}
+    .text-muted{color:var(--bs-gray-600)!important}
+    .text-primary{color:var(--bs-primary)!important}
+    .text-success{color:var(--bs-success)!important}
+    .text-danger{color:var(--bs-danger)!important}
+    .text-warning{color:var(--bs-warning)!important}
+    .text-center{text-align:center!important}
+    .text-end{text-align:right!important}
+    .fw-bold{font-weight:700!important}
+    .fw-semibold{font-weight:600!important}
+    .fs-1{font-size:calc(1.375rem + 1.5vw)!important}
+    .fs-2{font-size:calc(1.325rem + .9vw)!important}
+    .fs-3{font-size:calc(1.3rem + .6vw)!important}
+    .fs-4{font-size:calc(1.275rem + .3vw)!important}
+    .fs-5{font-size:1.25rem!important}
+    .fs-6{font-size:1rem!important}
+    .mb-0{margin-bottom:0!important}.mb-1{margin-bottom:.25rem!important}.mb-2{margin-bottom:.5rem!important}.mb-3{margin-bottom:1rem!important}.mb-4{margin-bottom:1.5rem!important}.mb-5{margin-bottom:3rem!important}
+    .mt-0{margin-top:0!important}.mt-1{margin-top:.25rem!important}.mt-2{margin-top:.5rem!important}.mt-3{margin-top:1rem!important}.mt-4{margin-top:1.5rem!important}.mt-5{margin-top:3rem!important}
+    .me-1{margin-right:.25rem!important}.me-2{margin-right:.5rem!important}.me-3{margin-right:1rem!important}
+    .ms-auto{margin-left:auto!important}
+    .p-0{padding:0!important}.p-1{padding:.25rem!important}.p-2{padding:.5rem!important}.p-3{padding:1rem!important}.p-4{padding:1.5rem!important}.p-5{padding:3rem!important}
+    .py-2{padding-top:.5rem!important;padding-bottom:.5rem!important}.py-3{padding-top:1rem!important;padding-bottom:1rem!important}.py-4{padding-top:1.5rem!important;padding-bottom:1.5rem!important}
+    .px-3{padding-right:1rem!important;padding-left:1rem!important}.px-4{padding-right:1.5rem!important;padding-left:1.5rem!important}
+    .pt-3{padding-top:1rem!important}.pb-3{padding-bottom:1rem!important}
+    .d-none{display:none!important}.d-block{display:block!important}.d-inline-block{display:inline-block!important}.d-flex{display:flex!important}
+    .flex-wrap{flex-wrap:wrap!important}.flex-column{flex-direction:column!important}
+    .justify-content-between{justify-content:space-between!important}.justify-content-center{justify-content:center!important}.justify-content-end{justify-content:flex-end!important}
+    .align-items-center{align-items:center!important}
+    .gap-2{gap:.5rem!important}.gap-3{gap:1rem!important}
+    .w-100{width:100%!important}
+    .h-100{height:100%!important}
+    .rounded{border-radius:var(--bs-border-radius)!important}.rounded-3{border-radius:var(--bs-border-radius-lg)!important}
+    .shadow{box-shadow:var(--bs-box-shadow)!important}.shadow-sm{box-shadow:var(--bs-box-shadow-sm)!important}
+    .border{border:1px solid var(--bs-border-color)!important}
+    .bg-white{background-color:#fff!important}.bg-light{background-color:var(--bs-gray-100)!important}
+    .text-uppercase{text-transform:uppercase!important}
+    .small{font-size:.875em}
+    .badge{display:inline-block;padding:.35em .65em;font-size:.75em;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:var(--bs-border-radius-sm)}
+    .bg-primary{background-color:var(--bs-primary)!important}.bg-success{background-color:var(--bs-success)!important}.bg-danger{background-color:var(--bs-danger)!important}.bg-warning{background-color:var(--bs-warning)!important}.bg-info{background-color:var(--bs-info)!important}.bg-secondary{background-color:var(--bs-secondary)!important}
+    .list-unstyled{padding-left:0;list-style:none}
+    .modal{position:fixed;top:0;left:0;z-index:1055;display:none;width:100%;height:100%;overflow-x:hidden;overflow-y:auto;outline:0}
+    .modal-dialog{position:relative;width:auto;margin:.5rem;pointer-events:none}
+    .modal.fade .modal-dialog{transition:transform .3s ease-out;transform:translate(0,-50px)}
+    @media (prefers-reduced-motion:reduce){.modal.fade .modal-dialog{transition:none}}
+    .modal.show .modal-dialog{transform:none}
+    .modal-content{position:relative;display:flex;flex-direction:column;width:100%;pointer-events:auto;background-color:#fff;background-clip:padding-box;border:1px solid rgba(0,0,0,.2);border-radius:var(--bs-border-radius-lg);outline:0}
+    .modal-backdrop{position:fixed;top:0;left:0;z-index:1050;width:100vw;height:100vh;background-color:#000}
+    .modal-backdrop.fade{opacity:0}.modal-backdrop.show{opacity:.5}
+    .modal-header{display:flex;flex-shrink:0;align-items:center;justify-content:space-between;padding:1rem 1rem;border-bottom:1px solid var(--bs-border-color);border-top-left-radius:calc(var(--bs-border-radius-lg) - 1px);border-top-right-radius:calc(var(--bs-border-radius-lg) - 1px)}
+    .modal-title{margin-bottom:0;line-height:1.5}
+    .modal-body{position:relative;flex:1 1 auto;padding:1rem}
+    .modal-footer{display:flex;flex-shrink:0;flex-wrap:wrap;align-items:center;justify-content:flex-end;padding:.75rem;border-top:1px solid var(--bs-border-color);border-bottom-right-radius:calc(var(--bs-border-radius-lg) - 1px);border-bottom-left-radius:calc(var(--bs-border-radius-lg) - 1px)}
+    @media (min-width:576px){.modal-dialog{max-width:500px;margin:1.75rem auto}}
+    .fade{transition:opacity .15s linear}
+    @media (prefers-reduced-motion:reduce){.fade{transition:none}}
+    .fade:not(.show){opacity:0}
+    .toast{--bs-toast-zindex:1090;--bs-toast-padding-x:.75rem;--bs-toast-padding-y:.5rem;--bs-toast-spacing:1.5rem;--bs-toast-max-width:350px;--bs-toast-font-size:.875rem;--bs-toast-color:;--bs-toast-bg:rgba(255,255,255,.85);--bs-toast-border-width:1px;--bs-toast-border-color:var(--bs-border-color-translucent);--bs-toast-border-radius:var(--bs-border-radius);--bs-toast-box-shadow:var(--bs-box-shadow);--bs-toast-header-color:var(--bs-secondary-color);--bs-toast-header-bg:rgba(255,255,255,.85);--bs-toast-header-border-color:rgba(0,0,0,.05);width:var(--bs-toast-max-width);max-width:100%;font-size:var(--bs-toast-font-size);color:var(--bs-toast-color);pointer-events:auto;background-color:var(--bs-toast-bg);background-clip:padding-box;border:var(--bs-toast-border-width) solid var(--bs-toast-border-color);box-shadow:var(--bs-toast-box-shadow);border-radius:var(--bs-toast-border-radius)}
+    .toast-container{position:absolute;z-index:var(--bs-toast-zindex);width:-webkit-max-content;width:max-content;max-width:100%;pointer-events:none}
+    .toast-container>:not(:last-child){margin-bottom:var(--bs-toast-spacing)}
+    .toast-header{display:flex;align-items:center;padding:var(--bs-toast-padding-y) var(--bs-toast-padding-x);color:var(--bs-toast-header-color);background-color:var(--bs-toast-header-bg);background-clip:padding-box;border-bottom:var(--bs-toast-border-width) solid var(--bs-toast-header-border-color);border-top-left-radius:calc(var(--bs-toast-border-radius) - var(--bs-toast-border-width));border-top-right-radius:calc(var(--bs-toast-border-radius) - var(--bs-toast-border-width))}
+    .toast-body{padding:var(--bs-toast-padding-x);word-wrap:break-word}
+    .toast.showing{opacity:0}.toast.show:not(.showing){display:block;opacity:1}
+    .toast.hide{display:none}
+    /* ===== Estilos personalizados veterinarios ===== */
+    :root{
+      --vet-primary:#1a7f5a;
+      --vet-primary-dark:#146347;
+      --vet-primary-light:#e8f5f0;
+      --vet-accent:#2c9e77;
+      --vet-bg:#f0f7f4;
+      --vet-card-border:#d1e7dd;
+    }
+    body{background-color:var(--vet-bg);}
+    .app-header{background:linear-gradient(135deg,var(--vet-primary) 0%,var(--vet-primary-dark) 100%);color:#fff;padding:2rem 0;margin-bottom:2rem;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+    .app-header h1{font-size:2rem;margin-bottom:.25rem;display:flex;align-items:center;gap:.5rem}
+    .app-header .subtitle{opacity:.9;font-size:1.1rem;margin:0}
+    .app-header .icon{font-size:2.2rem}
+    .section-title{color:var(--vet-primary);font-size:1.1rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+    .section-title::before{content:"";display:inline-block;width:4px;height:20px;background:var(--vet-primary);border-radius:2px}
+    .med-card{border:2px solid var(--vet-card-border);border-radius:.75rem;padding:1rem;margin-bottom:.75rem;cursor:pointer;transition:all .2s;background:#fff;position:relative}
+    .med-card:hover{border-color:var(--vet-accent);box-shadow:0 2px 8px rgba(26,127,90,.15)}
+    .med-card.selected{border-color:var(--vet-primary);background:var(--vet-primary-light);box-shadow:0 2px 12px rgba(26,127,90,.25)}
+    .med-card .med-name{font-weight:600;color:var(--vet-primary-dark);font-size:1.05rem}
+    .med-card .med-conc{color:var(--bs-gray-600);font-size:.9rem}
+    .med-card .btn-delete{position:absolute;top:.5rem;right:.5rem;opacity:.6;transition:opacity .2s}
+    .med-card .btn-delete:hover{opacity:1}
+    .radio-group{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.5rem}
+    .radio-tile{position:relative;flex:1;min-width:100px}
+    .radio-tile input{position:absolute;opacity:0;width:0;height:0}
+    .radio-tile label{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:.75rem .5rem;border:2px solid var(--bs-border-color);border-radius:.5rem;cursor:pointer;transition:all .15s;background:#fff;font-weight:500;font-size:.95rem;text-align:center;margin:0;height:100%}
+    .radio-tile input:checked+label{border-color:var(--vet-primary);background:var(--vet-primary-light);color:var(--vet-primary-dark);box-shadow:0 0 0 3px rgba(26,127,90,.15)}
+    .radio-tile input:focus-visible+label{outline:2px solid var(--vet-primary);outline-offset:2px}
+    .radio-tile label:hover{border-color:var(--vet-accent)}
+    .radio-tile .unit-badge{font-size:.75rem;color:var(--bs-gray-600);margin-top:.25rem;font-weight:400}
+    .radio-tile input:checked+label .unit-badge{color:var(--vet-primary-dark)}
+    .result-card{background:linear-gradient(135deg,var(--vet-primary) 0%,var(--vet-primary-dark) 100%);color:#fff;border:none;box-shadow:0 4px 20px rgba(26,127,90,.3)}
+    .result-card .card-body{padding:2rem}
+    .result-value{font-size:4rem;font-weight:800;line-height:1;margin:.5rem 0;text-shadow:0 2px 4px rgba(0,0,0,.2)}
+    .result-unit{font-size:1.5rem;font-weight:600;opacity:.9}
+    .result-detail{background:rgba(255,255,255,.15);border-radius:.5rem;padding:.75rem 1rem;margin-bottom:.5rem;backdrop-filter:blur(4px)}
+    .result-detail .label{font-size:.8rem;opacity:.8;text-transform:uppercase;letter-spacing:.5px}
+    .result-detail .value{font-size:1.1rem;font-weight:600}
+    .empty-state{text-align:center;padding:2rem;color:var(--bs-gray-500)}
+    .empty-state .icon{font-size:3rem;margin-bottom:1rem;opacity:.5}
+    .form-section{background:#fff;border-radius:.75rem;padding:1.5rem;margin-bottom:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+    .form-section h3{color:var(--vet-primary);font-size:1rem;font-weight:700;margin-bottom:1rem;text-transform:uppercase;letter-spacing:.5px}
+    .btn-vet{background-color:var(--vet-primary);border-color:var(--vet-primary);color:#fff}
+    .btn-vet:hover{background-color:var(--vet-primary-dark);border-color:var(--vet-primary-dark);color:#fff}
+    .btn-outline-vet{color:var(--vet-primary);border-color:var(--vet-primary);background:#fff}
+    .btn-outline-vet:hover{background-color:var(--vet-primary);color:#fff}
+    .notification-area{position:fixed;top:1rem;right:1rem;z-index:2000;max-width:350px}
+    .app-notification{padding:.75rem 1rem;border-radius:.5rem;margin-bottom:.5rem;box-shadow:0 4px 12px rgba(0,0,0,.15);display:flex;align-items:center;gap:.5rem;animation:slideIn .3s ease-out;font-size:.9rem}
+    .app-notification.success{background:#d1e7dd;color:#0a3622;border-left:4px solid var(--bs-success)}
+    .app-notification.info{background:#cff4fc;color:#055160;border-left:4px solid var(--bs-info)}
+    .app-notification.warning{background:#fff3cd;color:#664d03;border-left:4px solid var(--bs-warning)}
+    .app-notification.error{background:#f8d7da;color:#58151c;border-left:4px solid var(--bs-danger)}
+    @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+    .app-notification.hide{animation:slideOut .3s ease-in forwards}
+    @keyframes slideOut{to{transform:translateX(100%);opacity:0}}
+    .footer{background:var(--vet-primary-dark);color:rgba(255,255,255,.8);padding:1.5rem 0;margin-top:3rem;text-align:center;font-size:.9rem}
+    .footer p{margin:0}
+    .percentage-select{margin-top:.75rem;padding:.75rem;background:var(--bs-gray-100);border-radius:.5rem;border:1px dashed var(--bs-gray-300)}
+    .invalid-feedback{display:none;color:var(--bs-danger);font-size:.875em;margin-top:.25rem}
+    .was-validated .form-control:invalid~.invalid-feedback{display:block}
+    @media (max-width:767px){
+      .result-value{font-size:3rem}
+      .app-header h1{font-size:1.5rem}
+      .radio-tile{min-width:calc(50% - .375rem)}
+    }
+    @media (max-width:575px){
+      .result-value{font-size:2.5rem}
+      .radio-tile{min-width:100%}
+      .form-section{padding:1rem}
+    }
+    .calculation-preview{background:var(--bs-gray-100);border-radius:.5rem;padding:1rem;margin-top:1rem;font-family:monospace;font-size:.9rem;color:var(--bs-gray-700)}
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- Encabezado -->
+    <header class="app-header">
+      <div class="container">
+        <h1><span class="icon">🐾</span> Calculadora Veterinaria</h1>
+        <p class="subtitle">Cálculo de medicamentos inyectables</p>
+      </div>
+    </header>
+
+    <main class="container pb-5">
+      <div class="row g-4">
+        <!-- Columna izquierda: Medicamentos + Formulario -->
+        <div class="col-lg-7">
+          <!-- Sección 1: Medicamentos guardados -->
+          <section class="form-section" id="section-medicamentos">
+            <h3>💊 Medicamentos guardados</h3>
+            <div id="med-list" class="mb-3">
+              <div class="empty-state" id="empty-meds">
+                <div class="icon">📋</div>
+                <p class="mb-0">No hay medicamentos guardados.<br><small>Complete el formulario para agregar uno automáticamente.</small></p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sección 2: Datos para el cálculo -->
+          <section class="form-section" id="section-calculo">
+            <h3>📋 Datos para el cálculo</h3>
+
+            <!-- Datos generales -->
+            <div class="mb-4">
+              <h4 class="fs-6 fw-bold text-muted mb-3">DATOS GENERALES</h4>
+              <div class="row g-3">
+                <div class="col-12">
+                  <label for="med-nombre" class="form-label">Nombre del medicamento <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="med-nombre" placeholder="Ej: Enrofloxacina" autocomplete="off">
+                  <div class="invalid-feedback">Ingrese el nombre del medicamento.</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="animal-especie" class="form-label">Especie animal <span class="text-danger">*</span></label>
+                  <select class="form-select" id="animal-especie">
+                    <option value="" selected disabled>Seleccione...</option>
+                    <option value="bovino">Bovino</option>
+                    <option value="porcino">Porcino</option>
+                    <option value="equino">Equino</option>
+                    <option value="canino">Canino</option>
+                    <option value="felino">Felino</option>
+                    <option value="otros">Otros</option>
+                  </select>
+                  <div class="invalid-feedback">Seleccione la especie.</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="animal-peso" class="form-label">Peso del animal (kg) <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="animal-peso" placeholder="Ej: 250" min="0" step="any" inputmode="decimal">
+                  <div class="invalid-feedback">Ingrese un peso válido mayor que cero.</div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-4">
+
+            <!-- Datos del medicamento -->
+            <div>
+              <h4 class="fs-6 fw-bold text-muted mb-3">DATOS DEL MEDICAMENTO</h4>
+
+              <div class="row g-3 mb-3">
+                <div class="col-12">
+                  <label for="med-dosis" class="form-label">Dosis prescrita <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="med-dosis" placeholder="Ej: 10" min="0" step="any" inputmode="decimal">
+                  <div class="invalid-feedback">Ingrese una dosis válida mayor que cero.</div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label d-block">Unidad de dosis <span class="text-danger">*</span></label>
+                  <div class="radio-group" role="radiogroup" aria-label="Unidad de dosis">
+                    <div class="radio-tile">
+                      <input type="radio" name="dosis-unidad" id="dosis-mgkg" value="mg/kg">
+                      <label for="dosis-mgkg">mg/kg<span class="unit-badge">miligramos por kilogramo</span></label>
+                    </div>
+                    <div class="radio-tile">
+                      <input type="radio" name="dosis-unidad" id="dosis-uikg" value="UI/kg">
+                      <label for="dosis-uikg">UI/kg<span class="unit-badge">unidades internacionales por kilogramo</span></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-12">
+                  <label for="med-concentracion" class="form-label">Concentración del medicamento <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="med-concentracion" placeholder="Ej: 100" min="0" step="any" inputmode="decimal">
+                  <div class="invalid-feedback">Ingrese una concentración válida mayor que cero.</div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label d-block">Tipo de concentración <span class="text-danger">*</span></label>
+                  <div class="radio-group" role="radiogroup" aria-label="Tipo de concentración">
+                    <div class="radio-tile">
+                      <input type="radio" name="conc-unidad" id="conc-mgml" value="mg/ml">
+                      <label for="conc-mgml">mg/ml<span class="unit-badge">miligramos por mililitro</span></label>
+                    </div>
+                    <div class="radio-tile">
+                      <input type="radio" name="conc-unidad" id="conc-porcentaje" value="%">
+                      <label for="conc-porcentaje">Porcentaje (%)<span class="unit-badge">concentración porcentual</span></label>
+                    </div>
+                    <div class="radio-tile">
+                      <input type="radio" name="conc-unidad" id="conc-uiml" value="UI/ml">
+                      <label for="conc-uiml">UI/ml<span class="unit-badge">unidades internacionales por mililitro</span></label>
+                    </div>
+                  </div>
+
+                  <!-- Selector de tipo de porcentaje -->
+                  <div class="percentage-select" id="percentage-type-container" style="display:none;">
+                    <label class="form-label fw-semibold">Tipo de porcentaje:</label>
+                    <div class="radio-group" role="radiogroup" aria-label="Tipo de porcentaje">
+                      <div class="radio-tile">
+                        <input type="radio" name="pct-type" id="pct-mv" value="m/v">
+                        <label for="pct-mv">% m/v<span class="unit-badge">masa en volumen</span></label>
+                      </div>
+                      <div class="radio-tile">
+                        <input type="radio" name="pct-type" id="pct-mm" value="m/m">
+                        <label for="pct-mm">% m/m<span class="unit-badge">masa en masa</span></label>
+                      </div>
+                      <div class="radio-tile">
+                        <input type="radio" name="pct-type" id="pct-vv" value="v/v">
+                        <label for="pct-vv">% v/v<span class="unit-badge">volumen en volumen</span></label>
+                      </div>
+                      <div class="radio-tile">
+                        <input type="radio" name="pct-type" id="pct-na" value="no-especificado">
+                        <label for="pct-na">No especificado<span class="unit-badge">sin conversión automática</span></label>
+                      </div>
+                    </div>
+                    <div class="alert alert-warning mt-3 mb-0 py-2" id="pct-warning" style="display:none;">
+                      <small>⚠️ Solo % m/v puede convertirse automáticamente (1% = 10 mg/ml). Para otros tipos, ingrese la concentración equivalente en mg/ml manualmente.</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-4 pt-3 border-top">
+              <button type="button" class="btn btn-vet" id="btn-calcular">
+                ✓ Calcular
+              </button>
+              <button type="button" class="btn btn-outline-secondary" id="btn-limpiar">
+                🗑️ Limpiar
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <!-- Columna derecha: Resultado -->
+        <div class="col-lg-5">
+          <section id="section-resultado" class="sticky-top" style="top:1rem;">
+            <div class="card result-card">
+              <div class="card-body">
+                <h3 class="fs-5 fw-bold mb-3" style="color:rgba(255,255,255,.9);">📊 RESULTADO</h3>
+
+                <div class="text-center mb-4">
+                  <div class="result-value" id="result-value">--</div>
+                  <div class="result-unit">ml</div>
+                </div>
+
+                <div id="result-details" style="display:none;">
+                  <div class="result-detail">
+                    <div class="label">Medicamento</div>
+                    <div class="value" id="rd-nombre">-</div>
+                  </div>
+                  <div class="result-detail">
+                    <div class="label">Especie</div>
+                    <div class="value" id="rd-especie">-</div>
+                  </div>
+                  <div class="result-detail">
+                    <div class="label">Peso</div>
+                    <div class="value" id="rd-peso">-</div>
+                  </div>
+                  <div class="result-detail">
+                    <div class="label">Dosis</div>
+                    <div class="value" id="rd-dosis">-</div>
+                  </div>
+                  <div class="result-detail">
+                    <div class="label">Concentración</div>
+                    <div class="value" id="rd-concentracion">-</div>
+                  </div>
+                  <div class="result-detail" id="rd-conversion-container" style="display:none;background:rgba(255,193,7,.2);">
+                    <div class="label">⚠️ Conversión aplicada</div>
+                    <div class="value" id="rd-conversion">-</div>
+                  </div>
+                </div>
+
+                <div id="result-placeholder" class="text-center py-4" style="color:rgba(255,255,255,.7);">
+                  <div style="font-size:3rem;opacity:.5;">💉</div>
+                  <p class="mb-0 mt-2">Complete los datos para ver el cálculo</p>
+                </div>
+
+                <div class="alert alert-warning mt-3 mb-0" id="result-warning" style="display:none;background:rgba(255,243,205,.95);color:#664d03;">
+                  <small id="warning-text"></small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Fórmula visible -->
+            <div class="calculation-preview mt-3" id="formula-preview" style="display:none;">
+              <strong>Fórmula:</strong> <span id="formula-text"></span>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>© 2026 Erick Zepeda. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+
+    <!-- Modal de confirmación para eliminar -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmar eliminación</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0">¿Está seguro de que desea eliminar <strong id="delete-med-name"></strong> del catálogo?</p>
+            <p class="text-muted small mt-2 mb-0">Esta acción no se puede deshacer.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-danger" id="confirm-delete">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Área de notificaciones -->
+    <div class="notification-area" id="notifications"></div>
+  </div>
+
+  <script>
+    /* ============================================================
+       Calculadora Veterinaria de Dosis
+       Angular standalone compilado + lógica de negocio
+       ============================================================ */
+
+    // ===== Utilidades =====
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => document.querySelectorAll(sel);
+
+    const STORAGE_KEY = 'vet_calc_medicamentos_v1';
+
+    // Normalizar nombre: minúsculas, sin espacios extras
+    function normalizarNombre(nombre) {
+      return nombre.trim().replace(/\s+/g, ' ').toLowerCase();
+    }
+
+    // Formatear número para mostrar
+    function formatearNumero(n) {
+      if (n === null || n === undefined || isNaN(n)) return '--';
+      if (Number.isInteger(n)) return n.toString();
+      // Redondear a 2 decimales significativos, quitar ceros finales
+      return parseFloat(n.toFixed(4)).toString();
+    }
+
+    // ===== Estado de la aplicación =====
+    const state = {
+      medicamentos: [],
+      medicamentoSeleccionado: null,
+      resultado: null,
+      errores: {}
+    };
+
+    // ===== Persistencia (localStorage) =====
+    function cargarMedicamentos() {
+      try {
+        const data = localStorage.getItem(STORAGE_KEY);
+        state.medicamentos = data ? JSON.parse(data) : [];
+        if (!Array.isArray(state.medicamentos)) state.medicamentos = [];
+      } catch (e) {
+        console.error('Error al cargar medicamentos:', e);
+        state.medicamentos = [];
+      }
+    }
+
+    function guardarMedicamentos() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state.medicamentos));
+        return true;
+      } catch (e) {
+        console.error('Error al guardar:', e);
+        mostrarNotificacion('Error al guardar en el navegador', 'error');
+        return false;
+      }
+    }
+
+    // ===== Notificaciones =====
+    function mostrarNotificacion(mensaje, tipo = 'info', duracion = 3000) {
+      const container = $('#notifications');
+      const notif = document.createElement('div');
+      notif.className = `app-notification ${tipo}`;
+      notif.setAttribute('role', 'alert');
+      const iconos = { success: '✓', info: 'ℹ', warning: '⚠', error: '✕' };
+      notif.innerHTML = `<span style="font-weight:bold;">${iconos[tipo] || 'ℹ'}</span><span>${mensaje}</span>`;
+      container.appendChild(notif);
+      setTimeout(() => {
+        notif.classList.add('hide');
+        setTimeout(() => notif.remove(), 300);
+      }, duracion);
+    }
+
+    // ===== Catálogo: renderizado =====
+    function renderizarMedicamentos() {
+      const container = $('#med-list');
+      const empty = $('#empty-meds');
+
+      // Limpiar lista actual (mantener empty state)
+      container.querySelectorAll('.med-card').forEach(el => el.remove());
+
+      if (state.medicamentos.length === 0) {
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+
+      state.medicamentos.forEach((med, index) => {
+        const card = document.createElement('div');
+        card.className = 'med-card' + (state.medicamentoSeleccionado === index ? ' selected' : '');
+        card.setAttribute('role', 'radio');
+        card.setAttribute('aria-checked', state.medicamentoSeleccionado === index);
+        card.setAttribute('tabindex', '0');
+        card.dataset.index = index;
+
+        const concTexto = med.concTipo === '%' 
+          ? `${med.concentracion}% ${med.pctType === 'm/v' ? 'm/v' : med.pctType === 'm/m' ? 'm/m' : med.pctType === 'v/v' ? 'v/v' : ''}`
+          : `${med.concentracion} ${med.concTipo}`;
+
+        card.innerHTML = `
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="flex-grow-1" style="padding-right:2rem;">
+              <div class="med-name">${escapeHtml(med.nombre)}</div>
+              <div class="med-conc">${escapeHtml(concTexto)} · Dosis: ${med.dosis} ${med.dosisUnidad}</div>
+            </div>
+            <button type="button" class="btn btn-outline-danger btn-sm btn-delete" title="Eliminar medicamento" aria-label="Eliminar ${escapeHtml(med.nombre)}">
+              🗑️
+            </button>
+          </div>
+        `;
+
+        // Seleccionar al hacer click
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('.btn-delete')) return;
+          seleccionarMedicamento(index);
+        });
+
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            seleccionarMedicamento(index);
+          }
+        });
+
+        // Botón eliminar
+        card.querySelector('.btn-delete').addEventListener('click', (e) => {
+          e.stopPropagation();
+          mostrarModalEliminar(index);
+        });
+
+        container.appendChild(card);
+      });
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // ===== Catálogo: selección =====
+    function seleccionarMedicamento(index) {
+      const med = state.medicamentos[index];
+      if (!med) return;
+
+      state.medicamentoSeleccionado = index;
+
+      // Rellenar formulario
+      $('#med-nombre').value = med.nombre;
+      $('#med-dosis').value = med.dosis;
+      $('#med-concentracion').value = med.concentracion;
+
+      // Radio dosis unidad
+      if (med.dosisUnidad === 'mg/kg') $('#dosis-mgkg').checked = true;
+      else if (med.dosisUnidad === 'UI/kg') $('#dosis-uikg').checked = true;
+
+      // Radio concentración
+      if (med.concTipo === 'mg/ml') $('#conc-mgml').checked = true;
+      else if (med.concTipo === 'UI/ml') $('#conc-uiml').checked = true;
+      else if (med.concTipo === '%') {
+        $('#conc-porcentaje').checked = true;
+        // Tipo de porcentaje
+        if (med.pctType) {
+          const pctRadio = $(`input[name="pct-type"][value="${med.pctType}"]`);
+          if (pctRadio) pctRadio.checked = true;
+        }
+      }
+
+      // Disparar eventos para actualizar UI
+      actualizarVisibilidadPorcentaje();
+      validarYCalcular();
+      renderizarMedicamentos();
+
+      mostrarNotificacion(`Medicamento cargado: ${med.nombre}`, 'info', 2000);
+    }
+
+    // ===== Catálogo: guardado inteligente =====
+    function guardarOActualizarMedicamento() {
+      const nombre = $('#med-nombre').value.trim();
+      if (!nombre) return false;
+
+      const dosis = parseFloat($('#med-dosis').value);
+      const concentracion = parseFloat($('#med-concentracion').value);
+      const dosisUnidad = document.querySelector('input[name="dosis-unidad"]:checked')?.value;
+      const concTipo = document.querySelector('input[name="conc-unidad"]:checked')?.value;
+      const pctType = concTipo === '%' ? document.querySelector('input[name="pct-type"]:checked')?.value : null;
+
+      // Validar que todos los datos del medicamento estén completos
+      if (!dosis || dosis <= 0 || !concentracion || concentracion <= 0 || !dosisUnidad || !concTipo) {
+        return false; // No guardar registros incompletos
+      }
+
+      if (concTipo === '%' && !pctType) {
+        return false; // Falta tipo de porcentaje
+      }
+
+      // Validar compatibilidad de unidades
+      if (dosisUnidad === 'mg/kg' && concTipo === 'UI/ml') {
+        return false; // Incompatible
+      }
+      if (dosisUnidad === 'UI/kg' && concTipo === 'mg/ml') {
+        return false; // Incompatible
+      }
+      if (dosisUnidad === 'UI/kg' && concTipo === '%') {
+        return false; // UI con % no es convertible
+      }
+
+      const nombreNorm = normalizarNombre(nombre);
+      const existente = state.medicamentos.findIndex(m => normalizarNombre(m.nombre) === nombreNorm);
+
+      const datosMedicamento = {
+        nombre: nombre.trim(),
+        dosis: dosis,
+        dosisUnidad: dosisUnidad,
+        concentracion: concentracion,
+        concTipo: concTipo,
+        pctType: pctType
+      };
+
+      if (existente >= 0) {
+        // Actualizar existente
+        state.medicamentos[existente] = datosMedicamento;
+        state.medicamentoSeleccionado = existente;
+        guardarMedicamentos();
+        renderizarMedicamentos();
+        mostrarNotificacion(`Medicamento actualizado: ${datosMedicamento.nombre}`, 'success', 2500);
+      } else {
+        // Agregar nuevo
+        state.medicamentos.push(datosMedicamento);
+        state.medicamentoSeleccionado = state.medicamentos.length - 1;
+        guardarMedicamentos();
+        renderizarMedicamentos();
+        mostrarNotificacion(`Medicamento guardado: ${datosMedicamento.nombre}`, 'success', 2500);
+      }
+
+      return true;
+    }
+
+    // ===== Catálogo: eliminación =====
+    let medAEliminar = null;
+
+    function mostrarModalEliminar(index) {
+      medAEliminar = index;
+      $('#delete-med-name').textContent = state.medicamentos[index].nombre;
+      const modal = $('#deleteModal');
+      modal.classList.add('show');
+      modal.style.display = 'block';
+      document.body.classList.add('modal-open');
+
+      // Crear backdrop
+      const backdrop = document.createElement('div');
+      backdrop.className = 'modal-backdrop fade show';
+      backdrop.id = 'modal-backdrop';
+      document.body.appendChild(backdrop);
+    }
+
+    function cerrarModalEliminar() {
+      const modal = $('#deleteModal');
+      modal.classList.remove('show');
+      modal.style.display = 'none';
+      document.body.classList.remove('modal-open');
+      const backdrop = $('#modal-backdrop');
+      if (backdrop) backdrop.remove();
+      medAEliminar = null;
+    }
+
+    function confirmarEliminar() {
+      if (medAEliminar === null) return;
+      const med = state.medicamentos[medAEliminar];
+      state.medicamentos.splice(medAEliminar, 1);
+
+      if (state.medicamentoSeleccionado === medAEliminar) {
+        state.medicamentoSeleccionado = null;
+      } else if (state.medicamentoSeleccionado > medAEliminar) {
+        state.medicamentoSeleccionado--;
+      }
+
+      guardarMedicamentos();
+      renderizarMedicamentos();
+      cerrarModalEliminar();
+      mostrarNotificacion(`Medicamento eliminado: ${med.nombre}`, 'warning', 2500);
+    }
+
+    // ===== UI: visibilidad de porcentaje =====
+    function actualizarVisibilidadPorcentaje() {
+      const esPorcentaje = $('#conc-porcentaje').checked;
+      const container = $('#percentage-type-container');
+      container.style.display = esPorcentaje ? 'block' : 'none';
+
+      if (esPorcentaje) {
+        const pctSeleccionado = document.querySelector('input[name="pct-type"]:checked')?.value;
+        const warning = $('#pct-warning');
+        if (pctSeleccionado && pctSeleccionado !== 'm/v') {
+          warning.style.display = 'block';
+        } else {
+          warning.style.display = 'none';
+        }
+      }
+    }
+
+    // ===== Validación y cálculo =====
+    function obtenerDatosFormulario() {
+      return {
+        nombre: $('#med-nombre').value.trim(),
+        especie: $('#animal-especie').value,
+        peso: parseFloat($('#animal-peso').value),
+        dosis: parseFloat($('#med-dosis').value),
+        dosisUnidad: document.querySelector('input[name="dosis-unidad"]:checked')?.value || null,
+        concentracion: parseFloat($('#med-concentracion').value),
+        concTipo: document.querySelector('input[name="conc-unidad"]:checked')?.value || null,
+        pctType: document.querySelector('input[name="pct-type"]:checked')?.value || null
+      };
+    }
+
+    function validarDatos(datos) {
+      const errores = [];
+
+      // Campos requeridos
+      if (!datos.nombre) errores.push('Ingrese el nombre del medicamento');
+      if (!datos.especie) errores.push('Seleccione la especie animal');
+      if (!datos.peso || datos.peso <= 0) errores.push('Ingrese un peso válido mayor que cero');
+      if (!datos.dosis || datos.dosis <= 0) errores.push('Ingrese una dosis válida mayor que cero');
+      if (!datos.dosisUnidad) errores.push('Seleccione la unidad de dosis');
+      if (!datos.concentracion || datos.concentracion <= 0) errores.push('Ingrese una concentración válida mayor que cero');
+      if (!datos.concTipo) errores.push('Seleccione el tipo de concentración');
+
+      if (datos.concTipo === '%' && !datos.pctType) {
+        errores.push('Seleccione el tipo de porcentaje');
+      }
+
+      // Validación de compatibilidad de unidades
+      if (datos.dosisUnidad && datos.concTipo) {
+        if (datos.dosisUnidad === 'mg/kg' && datos.concTipo === 'UI/ml') {
+          errores.push('No se puede calcular: la dosis está en mg/kg pero la concentración en UI/ml. Las unidades deben ser compatibles (mg con mg, UI con UI).');
+        }
+        if (datos.dosisUnidad === 'UI/kg' && datos.concTipo === 'mg/ml') {
+          errores.push('No se puede calcular: la dosis está en UI/kg pero la concentración en mg/ml. Las unidades deben ser compatibles (UI con UI, mg con mg).');
+        }
+        if (datos.dosisUnidad === 'UI/kg' && datos.concTipo === '%') {
+          errores.push('No se puede calcular: las unidades internacionales (UI/kg) no pueden convertirse automáticamente desde porcentaje. Use concentración en UI/ml.');
+        }
+        if (datos.dosisUnidad === 'mg/kg' && datos.concTipo === '%' && datos.pctType && datos.pctType !== 'm/v') {
+          errores.push(`No se puede calcular automáticamente: el porcentaje ${datos.pctType === 'm/m' ? 'm/m (masa en masa)' : datos.pctType === 'v/v' ? 'v/v (volumen en volumen)' : 'no especificado'} requiere la densidad o información adicional para convertir a mg/ml. Ingrese la concentración directamente en mg/ml.`);
+        }
+      }
+
+      return errores;
+    }
+
+    function calcularVolumen(datos) {
+      let volumen = null;
+      let conversionAplicada = null;
+      let formula = '';
+
+      if (datos.dosisUnidad === 'mg/kg' && datos.concTipo === 'mg/ml') {
+        volumen = (datos.peso * datos.dosis) / datos.concentracion;
+        formula = `(${formatearNumero(datos.peso)} kg × ${formatearNumero(datos.dosis)} mg/kg) ÷ ${formatearNumero(datos.concentracion)} mg/ml = ${formatearNumero(volumen)} ml`;
+      } else if (datos.dosisUnidad === 'mg/kg' && datos.concTipo === '%' && datos.pctType === 'm/v') {
+        // Conversión: 1% m/v = 10 mg/ml
+        const concMgMl = datos.concentracion * 10;
+        volumen = (datos.peso * datos.dosis) / concMgMl;
+        conversionAplicada = `${datos.concentracion}% m/v = ${formatearNumero(concMgMl)} mg/ml (1% = 10 mg/ml)`;
+        formula = `(${formatearNumero(datos.peso)} kg × ${formatearNumero(datos.dosis)} mg/kg) ÷ ${formatearNumero(concMgMl)} mg/ml = ${formatearNumero(volumen)} ml`;
+      } else if (datos.dosisUnidad === 'UI/kg' && datos.concTipo === 'UI/ml') {
+        volumen = (datos.peso * datos.dosis) / datos.concentracion;
+        formula = `(${formatearNumero(datos.peso)} kg × ${formatearNumero(datos.dosis)} UI/kg) ÷ ${formatearNumero(datos.concentracion)} UI/ml = ${formatearNumero(volumen)} ml`;
+      }
+
+      return { volumen, conversionAplicada, formula };
+    }
+
+    function validarYCalcular() {
+      const datos = obtenerDatosFormulario();
+      const errores = validarDatos(datos);
+
+      // Actualizar clases de validación visual
+      actualizarValidacionVisual(datos, errores);
+
+      const resultValue = $('#result-value');
+      const resultDetails = $('#result-details');
+      const resultPlaceholder = $('#result-placeholder');
+      const resultWarning = $('#result-warning');
+      const formulaPreview = $('#formula-preview');
+
+      if (errores.length > 0) {
+        // Mostrar estado de espera o error
+        resultValue.textContent = '--';
+        resultDetails.style.display = 'none';
+        resultPlaceholder.style.display = 'block';
+        resultPlaceholder.querySelector('p').textContent = errores[0];
+        resultWarning.style.display = 'none';
+        formulaPreview.style.display = 'none';
+        state.resultado = null;
+        return;
+      }
+
+      // Calcular
+      const { volumen, conversionAplicada, formula } = calcularVolumen(datos);
+
+      if (volumen === null || isNaN(volumen) || !isFinite(volumen)) {
+        resultValue.textContent = '--';
+        resultDetails.style.display = 'none';
+        resultPlaceholder.style.display = 'block';
+        resultPlaceholder.querySelector('p').textContent = 'No se pudo realizar el cálculo. Verifique los datos.';
+        resultWarning.style.display = 'none';
+        formulaPreview.style.display = 'none';
+        state.resultado = null;
+        return;
+      }
+
+      // Mostrar resultado
+      resultValue.textContent = formatearNumero(volumen);
+      resultDetails.style.display = 'block';
+      resultPlaceholder.style.display = 'none';
+
+      // Llenar detalles
+      $('#rd-nombre').textContent = datos.nombre;
+      $('#rd-especie').textContent = datos.especie.charAt(0).toUpperCase() + datos.especie.slice(1);
+      $('#rd-peso').textContent = `${formatearNumero(datos.peso)} kg`;
+      $('#rd-dosis').textContent = `${formatearNumero(datos.dosis)} ${datos.dosisUnidad}`;
+
+      let concTexto = '';
+      if (datos.concTipo === '%') {
+        concTexto = `${formatearNumero(datos.concentracion)}%`;
+        if (datos.pctType === 'm/v') concTexto += ' m/v';
+        else if (datos.pctType === 'm/m') concTexto += ' m/m';
+        else if (datos.pctType === 'v/v') concTexto += ' v/v';
+      } else {
+        concTexto = `${formatearNumero(datos.concentracion)} ${datos.concTipo}`;
+      }
+      $('#rd-concentracion').textContent = concTexto;
+
+      // Mostrar conversión si aplica
+      const convContainer = $('#rd-conversion-container');
+      if (conversionAplicada) {
+        convContainer.style.display = 'block';
+        $('#rd-conversion').textContent = conversionAplicada;
+      } else {
+        convContainer.style.display = 'none';
+      }
+
+      // Fórmula
+      formulaPreview.style.display = 'block';
+      $('#formula-text').textContent = formula;
+
+      // Advertencias
+      if (volumen > 100) {
+        resultWarning.style.display = 'block';
+        $('#warning-text').textContent = '⚠️ El volumen calculado es elevado. Verifique la dosis y concentración antes de administrar.';
+      } else if (volumen < 0.1) {
+        resultWarning.style.display = 'block';
+        $('#warning-text').textContent = '⚠️ El volumen calculado es muy pequeño. Considere usar una jeringa de precisión (insulina). Verifique el cálculo.';
+      } else {
+        resultWarning.style.display = 'none';
+      }
+
+      state.resultado = { volumen, datos };
+
+      // Guardado automático e inteligente
+      guardarOActualizarMedicamento();
+    }
+
+    function actualizarValidacionVisual(datos, errores) {
+      // Nombre
+      $('#med-nombre').classList.toggle('is-invalid', !datos.nombre);
+      // Especie
+      $('#animal-especie').classList.toggle('is-invalid', !datos.especie);
+      // Peso
+      $('#animal-peso').classList.toggle('is-invalid', !datos.peso || datos.peso <= 0);
+      // Dosis
+      $('#med-dosis').classList.toggle('is-invalid', !datos.dosis || datos.dosis <= 0);
+      // Concentración
+      $('#med-concentracion').classList.toggle('is-invalid', !datos.concentracion || datos.concentracion <= 0);
+    }
+
+    // ===== Limpiar formulario =====
+    function limpiarFormulario() {
+      // Vaciar peso
+      $('#animal-peso').value = '';
+
+      // Restablecer campos del cálculo (mantener nombre/especie para facilitar nuevo cálculo)
+      $('#med-dosis').value = '';
+      $('#med-concentracion').value = '';
+
+      // Quitar selección de radios
+      $$('input[name="dosis-unidad"]').forEach(r => r.checked = false);
+      $$('input[name="conc-unidad"]').forEach(r => r.checked = false);
+      $$('input[name="pct-type"]').forEach(r => r.checked = false);
+
+      // Ocultar selector de porcentaje
+      $('#percentage-type-container').style.display = 'none';
+      $('#pct-warning').style.display = 'none';
+
+      // Quitar selección de medicamento
+      state.medicamentoSeleccionado = null;
+      renderizarMedicamentos();
+
+      // Limpiar resultado
+      $('#result-value').textContent = '--';
+      $('#result-details').style.display = 'none';
+      $('#result-placeholder').style.display = 'block';
+      $('#result-placeholder').querySelector('p').textContent = 'Complete los datos para ver el cálculo';
+      $('#result-warning').style.display = 'none';
+      $('#formula-preview').style.display = 'none';
+
+      // Quitar clases de validación
+      $$('.form-control, .form-select').forEach(el => el.classList.remove('is-invalid'));
+
+      state.resultado = null;
+
+      mostrarNotificacion('Formulario limpiado. Catálogo conservado.', 'info', 2000);
+
+      // Enfocar peso para nuevo cálculo
+      $('#animal-peso').focus();
+    }
+
+    // ===== Event listeners =====
+    function inicializarEventos() {
+      // Cálculo automático al modificar cualquier campo
+      const camposCalculo = ['#animal-peso', '#med-dosis', '#med-concentracion'];
+      camposCalculo.forEach(sel => {
+        $(sel).addEventListener('input', validarYCalcular);
+        $(sel).addEventListener('change', validarYCalcular);
+      });
+
+      $('#med-nombre').addEventListener('input', validarYCalcular);
+      $('#animal-especie').addEventListener('change', validarYCalcular);
+
+      // Radios
+      $$('input[name="dosis-unidad"]').forEach(r => {
+        r.addEventListener('change', validarYCalcular);
+      });
+
+      $$('input[name="conc-unidad"]').forEach(r => {
+        r.addEventListener('change', () => {
+          actualizarVisibilidadPorcentaje();
+          validarYCalcular();
+        });
+      });
+
+      $$('input[name="pct-type"]').forEach(r => {
+        r.addEventListener('change', () => {
+          actualizarVisibilidadPorcentaje();
+          validarYCalcular();
+        });
+      });
+
+      // Botón calcular (aunque es automático, da confirmación visual)
+      $('#btn-calcular').addEventListener('click', () => {
+        validarYCalcular();
+        if (state.resultado) {
+          mostrarNotificacion(`Cálculo completado: ${formatearNumero(state.resultado.volumen)} ml`, 'success', 2000);
+        }
+      });
+
+      // Botón limpiar
+      $('#btn-limpiar').addEventListener('click', limpiarFormulario);
+
+      // Modal eliminar
+      $('#confirm-delete').addEventListener('click', confirmarEliminar);
+      $$('#deleteModal .btn-close, #deleteModal .btn-secondary').forEach(btn => {
+        btn.addEventListener('click', cerrarModalEliminar);
+      });
+
+      // Cerrar modal con Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && $('#deleteModal').classList.contains('show')) {
+          cerrarModalEliminar();
+        }
+      });
+
+      // Cerrar modal al click en backdrop
+      $('#deleteModal').addEventListener('click', (e) => {
+        if (e.target === $('#deleteModal')) {
+          cerrarModalEliminar();
+        }
+      });
+    }
+
+    // ===== Inicialización =====
+    function init() {
+      cargarMedicamentos();
+      renderizarMedicamentos();
+      inicializarEventos();
+      actualizarVisibilidadPorcentaje();
+
+      console.log('🐾 Calculadora Veterinaria de Dosis - Lista para usar');
+      console.log(`📋 Medicamentos en catálogo: ${state.medicamentos.length}`);
+    }
+
+    // Arrancar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>
+
+  <!-- Registro de Service Worker para PWA -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .then((registration) => {
+            console.log('[PWA] Service Worker registrado:', registration.scope);
+          })
+          .catch((error) => {
+            console.log('[PWA] Error al registrar Service Worker:', error);
+          });
+      });
+    }
+  </script>
+</body>
+</html>
